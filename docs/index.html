@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="style.css">
+
+</head>
+<body>
+		<div id="container">
+		<h1 style="color:grey">Number System <span style="color:#fcd568;">Converter</span></h1>
+		<h2 id="output"></h2>
+		<label>From: </label>
+		<select id="from" class="select-labels" style="margin-right: 1em">
+			<option value="Binary">Binary</option>
+			<option value="Base-4">Base-4</option>
+			<option value="Octal">Octal</option>
+			<option value="Decimal">Decimal</option>
+		</select>
+		<label>To: </label>
+		<select id="to" class="select-labels">
+			<option value="Binary">Binary</option>
+			<option value="Base-4">Base-4</option>
+			<option value="Octal">Octal</option>
+			<option value="Decimal">Decimal</option>
+		</select><br><br>
+		<textarea id="text-input"></textarea>
+		<div class="btn-container">
+			<button id="convert">Convert</button>
+			<button id="clear">Clear</button>
+		</div>
+	</div>
+	<script type="text/javascript">
+		const textInput = document.getElementById('text-input');
+		const fromBase = document.getElementById('from');
+		const toBase = document.getElementById('to');
+		const output = document.getElementById('output');
+
+		const convertBtn = document.getElementById('convert');
+		const clearBtn = document.getElementById('clear');
+
+		//if nothing is selected default value is binary
+		var from = 'Binary';
+		var to = 'Binary';
+		var fromBitValue = 2;
+		var toBitValue = 2;
+
+		//event listeners
+		clearBtn.addEventListener('click',function (){
+			textInput.value = "";
+			output.innerText = "";
+		})
+
+		fromBase.addEventListener('change', function(){
+			 from = fromBase.value;
+		});
+
+		toBase.addEventListener('change', function(){
+			 to = toBase.value;
+		});
+
+		convert.addEventListener('click', check_inputs);
+
+		//validate input
+		function check_inputs(){
+			if(textInput.value.trim() == ""){
+				alert('Please type some text!')
+			}
+			else if(!textInput.value.match(/^[0-9a-zA-Z]+$/)){
+				alert('Non-alphanumeric characters are not allowed!');
+			}
+			//inputvalue is always equal to (bit value - 1)
+			else if(from == "Binary" && !(textInput.value.match(/^[0-1]+$/))){
+					alert("Invalid Input. Only numbers 0-1 are accepted.")
+				}
+			else if(from == "Base-4" && !(textInput.value.match(/^[0-3]+$/))){
+					alert("Invalid Input. Only numbers 0-3 are accepted.")
+				}
+			else if(from == "Octal" && !(textInput.value.match(/^[0-7]+$/))){
+					alert("Invalid Input. Only numbers 0-7 are accepted.")
+				}
+			else if(from == "Decimal" && !(textInput.value.match(/^[0-9]+$/))){
+					alert("Invalid Input. Only numbers 0-9 are accepted.")
+				}
+			else{
+				convertTo();
+			}
+		}
+
+		function convertTo(){
+			//from binary to n
+			if(from == "Binary" && to == "Decimal"){
+				fromBitValue = 2;
+				toBitValue = 10; 
+				output.innerText = baseN_to_decimal();
+			}
+			else if(from == "Binary" && to == "Base-4" ){
+				fromBitValue = 2;
+				toBitValue = 4; 
+				output.innerText = decimal_to_baseN();
+			}
+			else if(from == "Binary" && to == "Octal"){
+				fromBitValue = 2;
+				toBitValue = 8; 
+				output.innerText = decimal_to_baseN();
+			}	
+	
+			//from n to binary
+			else if(from == "Decimal" && to == "Binary"){
+				fromBitValue = 10;
+				toBitValue = 2; 
+				output.innerText = decimal_to_baseN();
+			}
+			else if(from == "Base-4" && to == "Binary"){
+				fromBitValue = 4;
+				toBitValue = 2; 
+				output.innerText = decimal_to_baseN();
+			}
+			else if(from == "Octal" && to == "Binary"){
+				fromBitValue = 8;
+				toBitValue = 2; 
+				output.innerText = decimal_to_baseN();
+			}
+			//base 4 to base n
+			else if(from == "Base-4" && to == "Octal"){
+				fromBitValue = 4;
+				toBitValue = 8; 
+				output.innerText = decimal_to_baseN();
+			}
+			else if(from == "Base-4" && to == "Decimal"){
+				fromBitValue = 4;
+				toBitValue = 10; 
+				output.innerText = decimal_to_baseN();
+			}
+			//base n to base 4
+			else if(from == "Octal" && to == "Base-4" ){
+				fromBitValue = 8;
+				toBitValue = 4; 
+				output.innerText = decimal_to_baseN();
+			}
+			else if(from == "Decimal" && to == "Base-4" ){
+				fromBitValue = 10;
+				toBitValue = 4; 
+				output.innerText = decimal_to_baseN();
+			}
+
+			//base 8 to base n
+			else if(from == "Octal" && to == "Decimal"){
+				fromBitValue = 8;
+				toBitValue = 10; 
+				output.innerText = decimal_to_baseN();
+			}
+			//base n to base 8
+			else if(from == "Decimal" && to == "Octal"){
+				fromBitValue = 10;
+				toBitValue = 8; 
+				output.innerText = decimal_to_baseN();
+			}
+			//decimal to base n
+
+
+			//Same selection of from and to	
+			else if(from == to){
+				output.innerText = textInput.value;
+			}
+		}
+
+		function reverse_string(Str){
+			let newStr = "";
+			let str = Str.replace(/\s/g,'');//remove all spaces inside and outside str
+
+			for(i=str.length-1; i>=0; i--){
+				newStr += str[i];
+			}
+			return newStr;	
+		}
+
+		function baseN_to_decimal(){
+			let baseN = reverse_string(textInput.value);
+			let decimal = 0;
+			for(i=0; i<baseN.length; i++){
+				var mulsOfN = Math.pow(fromBitValue,i);
+				var baseNValue = parseInt(baseN[i]) * mulsOfN;
+				decimal += baseNValue;
+			}
+				return decimal;
+		}
+
+		function decimal_to_baseN(){
+			let decimal = baseN_to_decimal();
+			let baseNReverse = "";
+			while(decimal>0){
+				remainder = decimal % toBitValue;
+				decimal = Math.floor(decimal/toBitValue);//decrement decimal by new decimal value
+				baseNReverse +=remainder; //concatenate remainders
+			}
+			var baseN = reverse_string(baseNReverse);//reverse it to get base n
+			return baseN;
+		}
+
+
+	</script>	
+</body>
+</html>

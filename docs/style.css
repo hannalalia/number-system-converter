@@ -1,0 +1,45 @@
+h1{
+	text-align: center;
+}
+#container{
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%,-60%);
+	font-family: 'Roboto', sans-serif;
+	width: 26em;
+	height: 20em;
+	padding: 2em;
+	text-align: center;
+}
+.select-labels, .select-labels option{
+	width: 10em;
+	padding: .5em;
+	margin-left: .5em;
+	outline: 0;
+	outline: 1px solid grey;
+}
+#text-input{
+	width: 30em;
+	height:15em;
+	font-family: inherit;
+	outline: 1px solid grey;
+}
+.btn-container{
+	margin: .5em;
+	display: flex;
+	justify-content: space-between;
+	flex: wrap;
+}
+.btn-container button{
+	padding: .5em;
+	font-size: 16px;
+	background: #fcd568;
+	color: white;
+	border:none;
+	outline: none;
+	box-shadow: 2px 2px grey;
+}
+.btn-container button:hover{
+	background: #e3bd54;
+}
