@@ -1,35 +1,46 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+	<meta charset="UTF-8">
+	<meta name="Description" content="Developer: F.L., Category: Computer, Topic: Number System Conversion">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Number System Converter</title>
 	<link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="style.css">
+	<link rel="manifest" href="manifest.json">
+	<!-- ios support -->
+	<meta name="apple-mobile-web-app-status-bar" content="#fcd568">
+	<meta name="theme-color" content="#999a9a">
+	<link rel="apple-touch-icon" href="images/icons/icon-96x96.png">
 
 </head>
 <body>
-		<div id="container">
+		<center id="container">
 		<h1 style="color:grey">Number System <span style="color:#fcd568;">Converter</span></h1>
 		<h2 id="output"></h2>
-		<label>From: </label>
-		<select id="from" class="select-labels" style="margin-right: 1em">
+		<div id="select-container">
+		<label for="from">From: </label>
+		<select id="from" name="from" class="select-labels" style="margin-right: 1em">
 			<option value="Binary">Binary</option>
 			<option value="Base-4">Base-4</option>
 			<option value="Octal">Octal</option>
 			<option value="Decimal">Decimal</option>
 		</select>
-		<label>To: </label>
-		<select id="to" class="select-labels">
+		<label for="to">To: </label>
+		<select id="to" name="to" class="select-labels">
 			<option value="Binary">Binary</option>
 			<option value="Base-4">Base-4</option>
 			<option value="Octal">Octal</option>
 			<option value="Decimal">Decimal</option>
-		</select><br><br>
-		<textarea id="text-input"></textarea>
-		<div class="btn-container">
-			<button id="convert">Convert</button>
-			<button id="clear">Clear</button>
+		</select>
 		</div>
-	</div>
+		<br><br>
+		<textarea id="text-input" aria-label="Input number to convert here"></textarea>
+		<br>
+		<br>
+		<button id="convert" aria-label="Convert Now">Convert</button>
+		<button id="clear" aria-label="Clear all inputs">Clear</button>
+		</center>
 	<script type="text/javascript">
 		const textInput = document.getElementById('text-input');
 		const fromBase = document.getElementById('from');
@@ -197,8 +208,7 @@
 			var baseN = reverse_string(baseNReverse);//reverse it to get base n
 			return baseN;
 		}
-
-
-	</script>	
+	</script>
+	<script src="app.js"></script>
 </body>
 </html>
